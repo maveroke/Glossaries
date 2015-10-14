@@ -37,6 +37,20 @@ namespace Glossaries.Core.ViewModels
 				return this.addGlossaryCommand;
 			}
 		}
+
+		private ICommand deleteGlossaryCommand;
+
+		public ICommand DeleteGlossaryCommand {
+			get {
+				if (this.deleteGlossaryCommand == null) {
+					this.deleteGlossaryCommand = new MvxCommand (() => {
+
+					});
+				}
+				return this.deleteGlossaryCommand;
+			}
+		}
+
 		private string userId;
 
 		private string name;
@@ -55,7 +69,7 @@ namespace Glossaries.Core.ViewModels
 
 		public bool SaveGlossary ()
 		{
-			if(this.Description.Length <= 500){
+			if(this.Description != null && this.Description.Length <= 500){
 				this.glossaryService.SaveGlossary(this.Name,this.Description,this.userId);
 				return true;
 			}

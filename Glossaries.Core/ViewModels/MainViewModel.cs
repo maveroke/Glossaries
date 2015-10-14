@@ -6,6 +6,7 @@ using Racing.Core.Services;
 using Xamarin.Forms;
 using Glossaries.Model;
 using Cirrious.CrossCore;
+using System.Collections.Generic;
 
 namespace Glossaries.Core.ViewModels
 {
@@ -36,19 +37,6 @@ namespace Glossaries.Core.ViewModels
 					glossaries = new ObservableCollection<GlossaryViewModel> ();
 				}
 				return glossaries;
-			}
-		}
-
-		private ICommand deleteGlossaryCommand;
-
-		public ICommand DeleteGlossaryCommand {
-			get {
-				if (this.deleteGlossaryCommand == null) {
-					this.deleteGlossaryCommand = new MvxCommand (() => {
-
-					});
-				}
-				return this.deleteGlossaryCommand;
 			}
 		}
 
