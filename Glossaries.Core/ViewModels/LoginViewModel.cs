@@ -4,6 +4,7 @@ using Parse;
 using Racing.Core.Services;
 using System;
 using Glossaries.Model;
+using Xamarin.Forms;
 
 namespace Glossaries.Core.ViewModels
 {
@@ -14,6 +15,13 @@ namespace Glossaries.Core.ViewModels
 
 		public LoginViewModel(IUserService userService){
 			this.userService = userService;
+			MessagingCenter.Subscribe<UserMessenger>(this,"Login",(sender) => {
+				if(sender.UserModel != null){
+					ShowViewModel<MainViewModel>();
+				}else{
+					//Unsuccessful
+				}
+			});
 		}
 
 		private string emailAddress;
@@ -36,7 +44,8 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.loginCommand == null) {
 					this.loginCommand = new MvxCommand (() => {
-						Login();
+
+						this.userService.GetUser(this.EmailAddress,this.Password);
 					});
 				}
 				return this.loginCommand;
@@ -49,22 +58,12 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.signUpCommand == null) {
 					this.signUpCommand = new MvxCommand (() => {
-						
+						SignUp();
 					});
 				}
 				return this.signUpCommand;
 			}
 		}		
-
-		public bool Login(){
-			var user = this.userService.GetUser(this.EmailAddress,this.Password);
-			if (user != null && user.Result != null) {
-				this.EmailAddress = user.Result.EmailAddress;
-				this.Password = user.Result.Password;
-				return true;
-			}
-			return false;
-		}
 
 		public ErrorModel SignUp ()
 		{
@@ -75,10 +74,7 @@ namespace Glossaries.Core.ViewModels
 				isError = true;
 				errorMessage = "You must supply an Email Address and Password to sign up.";
 			} else {
-				var error = this.userService.SaveUser(this.EmailAddress,this.Password);
-				if (error.Result != null) {
-					return error.Result;
-				}
+				this.userService.SaveUser(this.EmailAddress,this.Password);
 			}
 			return new ErrorModel (isError, errorMessage);
 		}
