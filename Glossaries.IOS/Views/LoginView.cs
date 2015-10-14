@@ -15,7 +15,6 @@ namespace Glossaries.IOS
 		{
 			View = new UIView { BackgroundColor = UIColor.White };
 			base.ViewDidLoad ();
-
 			// ios7 layout
 			if (RespondsToSelector (new Selector ("edgesForExtendedLayout"))) {
 				EdgesForExtendedLayout = UIRectEdge.None;
@@ -23,7 +22,6 @@ namespace Glossaries.IOS
 
 			var screenBounds = UIScreen.MainScreen.Bounds;
 			var halfScreenHeight = screenBounds.Height / 2;
-			var halfScreenWidth = screenBounds.Width / 2;
 
 			var loginBox = new UIView(new CGRect (20, halfScreenHeight - 80, screenBounds.Width-40, 160));
 			loginBox.BackgroundColor = UIColor.LightGray;

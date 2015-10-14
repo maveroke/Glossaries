@@ -1,23 +1,24 @@
 using Cirrious.MvvmCross.ViewModels;
 using System.Windows.Input;
 using Parse;
+using System.Collections.ObjectModel;
 using Racing.Core.Services;
-using System;
-using Glossaries.Model;
 using Xamarin.Forms;
+using Glossaries.Model;
+using System;
 
 namespace Glossaries.Core.ViewModels
 {
-    public class LoginViewModel 
+	public class LoginViewModel 
 		: MvxViewModel
-    {
+	{
 		private IUserService userService;
 
 		public LoginViewModel(IUserService userService){
 			this.userService = userService;
 			MessagingCenter.Subscribe<UserMessenger>(this,"Login",(sender) => {
 				if(sender.UserModel != null){
-					ShowViewModel<MainViewModel>();
+					ShowViewModel<MainViewModel>(new { userId = sender.UserModel.Id});
 				}else{
 					//Unsuccessful
 				}
@@ -70,7 +71,7 @@ namespace Glossaries.Core.ViewModels
 			var isError = false;
 			var errorMessage = String.Empty;
 			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
-			    String.IsNullOrEmpty (this.Password)) {
+				String.IsNullOrEmpty (this.Password)) {
 				isError = true;
 				errorMessage = "You must supply an Email Address and Password to sign up.";
 			} else {

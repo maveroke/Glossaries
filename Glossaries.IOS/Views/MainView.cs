@@ -5,6 +5,7 @@ using Foundation;
 using ObjCRuntime;
 using UIKit;
 using Cirrious.MvvmCross.ViewModels;
+using Cirrious.MvvmCross.Binding.Touch.Views;
 
 namespace Glossaries.IOS.Views
 {
@@ -23,11 +24,12 @@ namespace Glossaries.IOS.Views
             }
 
 			var screenBounds = UIScreen.MainScreen.Bounds;
-			var halfScreenHeight = screenBounds.Height / 2;
-			var halfScreenWidth = screenBounds.Width / 2;
-
 			var table = new UITableView(new CGRect(0, 0, screenBounds.Width, screenBounds.Height-40));
 			Add(table);
+
+			var source = new MvxStandardTableViewSource (table, "TitleText Name; ItemClick AddGlossaryCommand");
+			table.Source = source;
+
 			var btnAdd = new UIBarButtonItem (UIBarButtonSystemItem.Add);
 			this.SetToolbarItems( new UIBarButtonItem[] {
 				new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),btnAdd}
@@ -39,6 +41,7 @@ namespace Glossaries.IOS.Views
             set.Bind(table).To(vm => vm.Glossaries);
 			set.Bind (btnAdd).To (vm => vm.AddGlossaryCommand);
             set.Apply();
+			table.ReloadData ();
         }
     }
 }

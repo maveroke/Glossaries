@@ -1,4 +1,5 @@
 ﻿using System;
+using Parse;
 
 namespace Glossaries.Model
 {
@@ -8,8 +9,11 @@ namespace Glossaries.Model
 		public string Name{ get; set; }
 		public string Description{ get; set; }
 
-		public GlossaryModel(string userId){
-			this.UserId = userId;
+
+		public GlossaryModel(ParseObject user){
+			this.UserId = user ["UserId"].ToString();
+			this.Name = user ["Name"].ToString();
+			this.Description = user ["Description"].ToString();
 		}
 	}
 }
