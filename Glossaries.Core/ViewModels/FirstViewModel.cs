@@ -7,6 +7,7 @@ namespace Glossaries.Core.ViewModels
     public class FirstViewModel 
 		: MvxViewModel
     {
+		
 		private string _hello = "Hello MvvmCross";
         public string Hello
 		{ 
@@ -28,9 +29,6 @@ namespace Glossaries.Core.ViewModels
 		}
 		public async void ParseObject(){
 
-			var testObject = new ParseObject ("TestObject");
-			testObject ["foo"] = "bar";
-			await testObject.SaveAsync ();
 		}
     }
 }

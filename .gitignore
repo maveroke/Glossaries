@@ -7,3 +7,5 @@ Glossaries.Model/obj
 packages
 .DS_Store
 Glossaries.userprefs
+Glossaries.Test/bin
+Glossaries.Test/obj
