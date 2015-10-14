@@ -5,3 +5,5 @@ Glossaries.IOS/obj
 Glossaries.Model/bin
 Glossaries.Model/obj
 packages
+.DS_Store
+Glossaries.userprefs

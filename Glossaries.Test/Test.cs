@@ -3,12 +3,15 @@ using System;
 
 namespace Glossaries.Test
 {
-	[TestFixture ()]
+	[TestFixture]
 	public class Test
 	{
-		[Test ()]
+		[Test]
 		public void TestCase ()
 		{
+			//			var a = new A();
+			//			var result = a.Calc(5);
+			//			Assert.IsTrue ();
 		}
 	}
 }
