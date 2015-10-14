@@ -4,11 +4,12 @@ using CoreGraphics;
 using Foundation;
 using ObjCRuntime;
 using UIKit;
+using Cirrious.MvvmCross.ViewModels;
 
 namespace Glossaries.IOS.Views
 {
     [Register("FirstView")]
-    public class FirstView : MvxViewController
+	public class FirstView : MvxViewController,IMvxNotifyPropertyChanged
     {
         public override void ViewDidLoad()
         {
@@ -37,5 +38,24 @@ namespace Glossaries.IOS.Views
 			set.Bind (button).To (vm => vm.ParseCommand);
             set.Apply();
         }
+
+		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+		public bool ShouldAlwaysRaiseInpcOnUserInterfaceThread ()
+		{
+			return false;
+		}
+		public void ShouldAlwaysRaiseInpcOnUserInterfaceThread (bool value)
+		{
+		}
+		public void RaisePropertyChanged<T> (System.Linq.Expressions.Expression<System.Func<T>> property)
+		{
+		}
+		public void RaisePropertyChanged (string whichProperty)
+		{
+		}
+		public void RaisePropertyChanged (System.ComponentModel.PropertyChangedEventArgs changedArgs)
+		{
+		}
     }
 }

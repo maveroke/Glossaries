@@ -47,12 +47,28 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Cirrious.MvvmCross.Wpf">
+      <HintPath>..\packages\MvvmCross.HotTuna.MvvmCrossLibraries.3.5.1\lib\net45\Cirrious.MvvmCross.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="Cirrious.MvvmCross">
+      <HintPath>..\packages\MvvmCross.HotTuna.MvvmCrossLibraries.3.5.1\lib\net45\Cirrious.MvvmCross.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Test.cs" />
+    <Compile Include="LoginTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Glossaries.Core\Glossaries.Core.csproj">
+      <Project>{4855E5DA-526B-4C40-9B2F-3F7B9B2E174A}</Project>
+      <Name>Glossaries.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Glossaries.Model\Glossaries.Model.csproj">
+      <Project>{154CAB06-1526-4522-A843-83048BEFB731}</Project>
+      <Name>Glossaries.Model</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
