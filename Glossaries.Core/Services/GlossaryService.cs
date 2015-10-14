@@ -36,12 +36,7 @@ namespace Racing.Core.Services
 			GetGlossaries (userId);
 		}
 
-		public void DeleteGlossary (string id)
-		{
-			throw new System.NotImplementedException ();
-		}
-
-		public void SaveGlossary (string name, string description,string userId)
+		public void SaveUserGlossary (string name, string description,string userId)
 		{
 			var glossary = new ParseObject (GlossaryTable);
 			glossary["Name"] = name;
@@ -50,14 +45,17 @@ namespace Racing.Core.Services
 			SaveGlossary (glossary);
 		}
 
-		public void DeleteGlossary (string name, string description,string userId)
-		{
-			var glossary = new ParseObject (GlossaryTable);
-			glossary["Name"] = name;
-			glossary["Description"] = description;
-			glossary ["UserId"] = userId;
-			DeleteGlossary (glossary);
+		public void DeleteUserGlossary (string Id){
+			DeleteGlossary (Id);
 		}
+//		public void DeleteGlossary (string name, string description,string userId)
+//		{
+//			var glossary = new ParseObject (GlossaryTable);
+//			glossary["Name"] = name;
+//			glossary["Description"] = description;
+//			glossary ["UserId"] = userId;
+//			DeleteGlossary (glossary);
+//		}
 
 		private async void GetGlossaries(string userId){
 			var query = ParseObject.GetQuery (GlossaryTable)
@@ -79,9 +77,17 @@ namespace Racing.Core.Services
 			MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (), "SaveGlossary");
 		}
 
-		private async void DeleteGlossary(ParseObject glossary){
-			await glossary.DeleteAsync ();
-			MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (), "DeleteGlossary");
+		private async void DeleteGlossary(string Id){
+			var query = ParseObject.GetQuery (GlossaryTable)
+				.WhereEqualTo ("objectId", Id);
+			IEnumerable<ParseObject> results = await query.FindAsync ();
+			if (results.Any ()) {
+				if (results.FirstOrDefault() != null) {
+					var glossary = (ParseObject)results.FirstOrDefault();
+					await (glossary).DeleteAsync ();
+					GetGlossaries (glossary ["UserId"].ToString());
+				}
+			}
 		}
 	}
 }

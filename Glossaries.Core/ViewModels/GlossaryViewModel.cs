@@ -20,6 +20,7 @@ namespace Glossaries.Core.ViewModels
 
 		public GlossaryViewModel (GlossaryModel glossary)
 		{
+			this.glossaryService = new GlossaryService ();
 			UpdateViewModel (glossary);
 		}
 
@@ -44,7 +45,7 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.deleteGlossaryCommand == null) {
 					this.deleteGlossaryCommand = new MvxCommand (() => {
-
+						this.glossaryService.DeleteUserGlossary(this.Id);
 					});
 				}
 				return this.deleteGlossaryCommand;
@@ -52,6 +53,8 @@ namespace Glossaries.Core.ViewModels
 		}
 
 		private string userId;
+
+		private string Id;
 
 		private string name;
 		public string Name
@@ -70,7 +73,7 @@ namespace Glossaries.Core.ViewModels
 		public bool SaveGlossary ()
 		{
 			if(this.Description != null && this.Description.Length <= 500){
-				this.glossaryService.SaveGlossary(this.Name,this.Description,this.userId);
+				this.glossaryService.SaveUserGlossary(this.Name,this.Description,this.userId);
 				return true;
 			}
 			return false;
@@ -85,6 +88,7 @@ namespace Glossaries.Core.ViewModels
 
 		public void UpdateViewModel (GlossaryModel glossary)
 		{
+			this.Id = glossary.Id;
 			this.userId = glossary.UserId;
 			this.Name = glossary.Name;
 			this.Description = glossary.Description;

@@ -9,8 +9,8 @@ namespace Racing.Core.Services
 	{
 		void GetUserGlossaries(string userId);
 
-		void SaveGlossary(string name, string description,string userId);
+		void SaveUserGlossary(string name, string description,string userId);
 
-		void DeleteGlossary(string id);
+		void DeleteUserGlossary(string userId);
 	}
 }
