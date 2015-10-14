@@ -3,16 +3,17 @@ using System.Windows.Input;
 using Parse;
 using Racing.Core.Services;
 using System;
+using Glossaries.Model;
 
 namespace Glossaries.Core.ViewModels
 {
     public class LoginViewModel 
 		: MvxViewModel
     {
-		private IParseService parseService;
+		private IUserService userService;
 
-		public LoginViewModel(IParseService parseService){
-			this.parseService = parseService;
+		public LoginViewModel(IUserService userService){
+			this.userService = userService;
 		}
 
 		private string emailAddress;
@@ -35,10 +36,10 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.loginCommand == null) {
 					this.loginCommand = new MvxCommand (() => {
-						this.parseService.ParseNewObject();
+						Login();
 					});
 				}
-				return this.LoginCommand;
+				return this.loginCommand;
 			}
 		}
 
@@ -48,11 +49,38 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.signUpCommand == null) {
 					this.signUpCommand = new MvxCommand (() => {
-						throw new Exception();
+						
 					});
 				}
 				return this.signUpCommand;
 			}
+		}		
+
+		public bool Login(){
+			var user = this.userService.GetUser(this.EmailAddress,this.Password);
+			if (user != null && user.Result != null) {
+				this.EmailAddress = user.Result.EmailAddress;
+				this.Password = user.Result.Password;
+				return true;
+			}
+			return false;
+		}
+
+		public ErrorModel SignUp ()
+		{
+			var isError = false;
+			var errorMessage = String.Empty;
+			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
+			    String.IsNullOrEmpty (this.Password)) {
+				isError = true;
+				errorMessage = "You must supply an Email Address and Password to sign up.";
+			} else {
+				var error = this.userService.SaveUser(this.EmailAddress,this.Password);
+				if (error.Result != null) {
+					return error.Result;
+				}
+			}
+			return new ErrorModel (isError, errorMessage);
 		}
     }
 }
