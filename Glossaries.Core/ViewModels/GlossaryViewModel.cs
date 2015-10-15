@@ -40,8 +40,11 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.addGlossaryCommand == null) {
 					this.addGlossaryCommand = new MvxCommand (() => {
+						if(this.Name == null || this.Description == null){
+							Mvx.Resolve<IUserInteraction>().Alert("You need a Glossary and Description to save");
+						}
 						if(!SaveGlossary()){
-							//Description over Max Size
+							Mvx.Resolve<IUserInteraction>().Alert("Description must not exceed 500 characters");
 						}
 					});
 				}
@@ -98,11 +101,9 @@ namespace Glossaries.Core.ViewModels
 
 		public bool SaveGlossary ()
 		{
-			if (this.Description != null && this.Description.Length <= 500) {
+			if (this.Name != null && this.Description != null && this.Description.Length <= 500) {
 				this.glossaryService.SaveUserGlossary (this.Id, this.Name, this.Description, this.userId);
 				return true;
-			} else {
-				Mvx.Resolve<IUserInteraction>().Alert("Description must not exceed 500 characters");
 			}
 			return false;
 		}

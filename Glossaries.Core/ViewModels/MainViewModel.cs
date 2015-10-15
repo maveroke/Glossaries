@@ -59,7 +59,6 @@ namespace Glossaries.Core.ViewModels
 				if (this.logoutCommand == null) {
 					this.logoutCommand = new MvxCommand (() => {
 						ShowViewModel<LoginViewModel>();
-						MessagingCenter.Unsubscribe<GlossaryMessenger>(this,"Glossaries");
 					});
 				}
 				return this.logoutCommand;

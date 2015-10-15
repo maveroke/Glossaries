@@ -49,7 +49,9 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.loginCommand == null) {
 					this.loginCommand = new MvxCommand (() => {
-						Login();
+						if(!Login()){
+							Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to Login.");
+						}
 					});
 				}
 				return this.loginCommand;
@@ -62,7 +64,9 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.signUpCommand == null) {
 					this.signUpCommand = new MvxCommand (() => {
-						SignUp();
+						if(!SignUp()){
+							Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to sign up.");
+						}
 					});
 				}
 				return this.signUpCommand;
@@ -77,7 +81,6 @@ namespace Glossaries.Core.ViewModels
 				this.waitForResponse = true;
 				if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
 				   String.IsNullOrEmpty (this.Password)) {
-					Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to sign up.");
 					return isSuccess;
 				} else {
 					isSuccess = true;
@@ -85,6 +88,9 @@ namespace Glossaries.Core.ViewModels
 				}
 			}
 			return isSuccess;
+		}
+		public bool Test(){
+			return true;
 		}
 
 		public bool Login(){
@@ -94,7 +100,6 @@ namespace Glossaries.Core.ViewModels
 				var errorMessage = String.Empty;
 				if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
 				   String.IsNullOrEmpty (this.Password)) {
-					Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to Login.");
 					return isSuccess;
 				} else {
 					isSuccess = true;
