@@ -1,19 +1,28 @@
 using Cirrious.MvvmCross.ViewModels;
 using System.Windows.Input;
 using Parse;
+using System.Collections.ObjectModel;
 using Racing.Core.Services;
-using System;
+using Xamarin.Forms;
 using Glossaries.Model;
+using System;
 
 namespace Glossaries.Core.ViewModels
 {
-    public class LoginViewModel 
+	public class LoginViewModel 
 		: MvxViewModel
-    {
+	{
 		private IUserService userService;
 
 		public LoginViewModel(IUserService userService){
 			this.userService = userService;
+			MessagingCenter.Subscribe<UserMessenger>(this,"Login",(sender) => {
+				if(sender.UserModel != null){
+					ShowViewModel<MainViewModel>(new { userId = sender.UserModel.Id});
+				}else{
+					//Unsuccessful
+				}
+			});
 		}
 
 		private string emailAddress;
@@ -36,7 +45,8 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.loginCommand == null) {
 					this.loginCommand = new MvxCommand (() => {
-						Login();
+
+						this.userService.GetUser(this.EmailAddress,this.Password);
 					});
 				}
 				return this.loginCommand;
@@ -49,36 +59,23 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.signUpCommand == null) {
 					this.signUpCommand = new MvxCommand (() => {
-						
+						SignUp();
 					});
 				}
 				return this.signUpCommand;
 			}
 		}		
 
-		public bool Login(){
-			var user = this.userService.GetUser(this.EmailAddress,this.Password);
-			if (user != null && user.Result != null) {
-				this.EmailAddress = user.Result.EmailAddress;
-				this.Password = user.Result.Password;
-				return true;
-			}
-			return false;
-		}
-
 		public ErrorModel SignUp ()
 		{
 			var isError = false;
 			var errorMessage = String.Empty;
 			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
-			    String.IsNullOrEmpty (this.Password)) {
+				String.IsNullOrEmpty (this.Password)) {
 				isError = true;
 				errorMessage = "You must supply an Email Address and Password to sign up.";
 			} else {
-				var error = this.userService.SaveUser(this.EmailAddress,this.Password);
-				if (error.Result != null) {
-					return error.Result;
-				}
+				this.userService.SaveUser(this.EmailAddress,this.Password);
 			}
 			return new ErrorModel (isError, errorMessage);
 		}

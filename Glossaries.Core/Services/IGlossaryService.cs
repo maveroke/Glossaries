@@ -7,10 +7,12 @@ namespace Racing.Core.Services
 {
 	public interface IGlossaryService
 	{
-		Task<UserModel> GetUserGlossaries(UserModel userModel);
+		void GetUserGlossary (string id);
 
-		void SaveGlossaries(UserModel userModel);
+		void GetUserGlossaries(string userId);
 
-		void DeleteGlossary(GlossaryModel glossaryModel);
+		void SaveUserGlossary(string Id, string name, string description,string userId);
+
+		void DeleteUserGlossary(string userId);
 	}
 }

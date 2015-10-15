@@ -9,3 +9,5 @@ packages
 Glossaries.userprefs
 Glossaries.Test/bin
 Glossaries.Test/obj
+App.cs
+LinkerPleaseInclude.cs

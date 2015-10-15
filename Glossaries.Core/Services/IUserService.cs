@@ -6,8 +6,8 @@ namespace Racing.Core.Services
 {
 	public interface IUserService
 	{
-		Task<UserModel> GetUser(string emailAddress, string password);
+		 void GetUser(string emailAddress, string password);
 
-		Task<ErrorModel> SaveUser(string emailAddress, string password);
+		 void SaveUser (string emailAddress, string password);
 	}
 }
