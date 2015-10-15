@@ -42,8 +42,7 @@ namespace Glossaries.Core.ViewModels
 					this.addGlossaryCommand = new MvxCommand (() => {
 						if(this.Name == null || this.Description == null){
 							Mvx.Resolve<IUserInteraction>().Alert("You need a Glossary and Description to save");
-						}
-						if(!SaveGlossary()){
+						}else if(!SaveGlossary()){
 							Mvx.Resolve<IUserInteraction>().Alert("Description must not exceed 500 characters");
 						}
 					});
