@@ -15,7 +15,7 @@ namespace Glossaries.Core.ViewModels
 	public class LoginViewModel : MvxViewModel,IVisible
 	{
 		private IUserService userService;
-
+		private bool waitForResponse;
 		public LoginViewModel(IUserService userService){
 			this.userService = userService;
 			MessagingCenter.Subscribe<UserMessenger> (this, "Login", (sender) => {
@@ -25,6 +25,7 @@ namespace Glossaries.Core.ViewModels
 					//Unsuccessful
 					Mvx.Resolve<IUserInteraction>().Alert("Incorrect Username or Password");
 				}
+				waitForResponse = false;
 			});
 		}
 
@@ -72,27 +73,33 @@ namespace Glossaries.Core.ViewModels
 		{
 			var isSuccess = false;
 			var errorMessage = String.Empty;
-			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
-				String.IsNullOrEmpty (this.Password)) {
-				Mvx.Resolve<IUserInteraction>().Alert("You must supply an Email Address and Password to sign up.");
-				return isSuccess;
-			} else {
-				isSuccess = true;
-				this.userService.SaveUser(this.EmailAddress,this.Password);
+			if (!waitForResponse) {
+				this.waitForResponse = true;
+				if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
+				   String.IsNullOrEmpty (this.Password)) {
+					Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to sign up.");
+					return isSuccess;
+				} else {
+					isSuccess = true;
+					this.userService.SaveUser (this.EmailAddress, this.Password);
+				}
 			}
 			return isSuccess;
 		}
 
 		public bool Login(){
 			var isSuccess = false;
-			var errorMessage = String.Empty;
-			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
-				String.IsNullOrEmpty (this.Password)) {
-				Mvx.Resolve<IUserInteraction>().Alert("You must supply an Email Address and Password to Login.");
-				return isSuccess;
-			} else {
-				isSuccess = true;
-				this.userService.GetUser(this.EmailAddress,this.Password);
+			if (!waitForResponse) {
+				this.waitForResponse = true;
+				var errorMessage = String.Empty;
+				if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
+				   String.IsNullOrEmpty (this.Password)) {
+					Mvx.Resolve<IUserInteraction> ().Alert ("You must supply an Email Address and Password to Login.");
+					return isSuccess;
+				} else {
+					isSuccess = true;
+					this.userService.GetUser (this.EmailAddress, this.Password);
+				}
 			}
 			return isSuccess;
 		}

@@ -13,15 +13,17 @@ namespace Glossaries.Core.ViewModels
 	public class GlossaryViewModel : MvxViewModel,IVisible
 	{
 		private IGlossaryService glossaryService;
-
+		private bool waitForResponse;
 		public GlossaryViewModel(IGlossaryService glossaryService){
 			this.glossaryService = glossaryService;
 			MessagingCenter.Subscribe<GlossaryMessenger>(this,"SaveGlossary",(sender) => {
 				ShowViewModel<MainViewModel>(new { userId = this.userId});
+				waitForResponse = false;
 			});
 			MessagingCenter.Subscribe<GlossaryMessenger>(this,"EditGlossary",(sender) => {
 				if(sender.EditGlossaryModel != null){
 					UpdateViewModel(sender.EditGlossaryModel);
+					waitForResponse = false;
 				}
 			});
 		}
@@ -53,7 +55,10 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.deleteGlossaryCommand == null) {
 					this.deleteGlossaryCommand = new MvxCommand (() => {
-						this.glossaryService.DeleteUserGlossary(this.Id);
+					if(!waitForResponse){
+							waitForResponse = true;
+							this.glossaryService.DeleteUserGlossary(this.Id);
+						}
 					});
 				}
 				return this.deleteGlossaryCommand;

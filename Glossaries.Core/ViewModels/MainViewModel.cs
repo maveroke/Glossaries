@@ -20,8 +20,8 @@ namespace Glossaries.Core.ViewModels
 		public MainViewModel(IGlossaryService glossaryService){
 			this.glossaryService = glossaryService;
 			MessagingCenter.Subscribe<GlossaryMessenger>(this,"Glossaries",(sender) => {
+				this.Glossaries.Clear();
 				if(sender.GlossariesModel != null){
-					this.Glossaries.Clear();
 					foreach(var glossary in sender.GlossariesModel){
 						var glossaryViewModel = new GlossaryViewModel(glossary);
 						this.Glossaries.Add(glossaryViewModel);
