@@ -5,6 +5,8 @@ using Foundation;
 using ObjCRuntime;
 using CoreGraphics;
 using Cirrious.MvvmCross.Binding.BindingContext;
+using Cirrious.MvvmCross.ViewModels;
+using Glossaries.Core.ViewModels;
 
 namespace Glossaries.IOS
 {
@@ -15,6 +17,7 @@ namespace Glossaries.IOS
 		{
 			View = new UIView { BackgroundColor = UIColor.White };
 			base.ViewDidLoad ();
+
 			// ios7 layout
 			if (RespondsToSelector (new Selector ("edgesForExtendedLayout"))) {
 				EdgesForExtendedLayout = UIRectEdge.None;

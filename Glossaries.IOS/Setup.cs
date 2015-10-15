@@ -21,5 +21,11 @@ namespace Glossaries.IOS
         {
             return new DebugTrace();
         }
+		protected override void AddPluginsLoaders (Cirrious.CrossCore.Plugins.MvxLoaderPluginRegistry loaders)
+		{
+			loaders.AddConventionalPlugin<Chance.MvvmCross.Plugins.UserInteraction.Touch.Plugin>();
+
+			base.AddPluginsLoaders (loaders);
+		}
 	}
 }

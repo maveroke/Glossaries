@@ -7,6 +7,8 @@ using Xamarin.Forms;
 using Glossaries.Model;
 using System;
 using Glossaries.Core.Interfaces;
+using Cirrious.CrossCore;
+using Chance.MvvmCross.Plugins.UserInteraction;
 
 namespace Glossaries.Core.ViewModels
 {
@@ -21,6 +23,7 @@ namespace Glossaries.Core.ViewModels
 					ShowViewModel<MainViewModel> (new { userId = sender.UserModel.Id});
 				} else {
 					//Unsuccessful
+					Mvx.Resolve<IUserInteraction>().Alert("Incorrect Username or Password");
 				}
 			});
 		}
@@ -45,8 +48,7 @@ namespace Glossaries.Core.ViewModels
 			get {
 				if (this.loginCommand == null) {
 					this.loginCommand = new MvxCommand (() => {
-
-						this.userService.GetUser(this.EmailAddress,this.Password);
+						Login();
 					});
 				}
 				return this.loginCommand;
@@ -64,20 +66,35 @@ namespace Glossaries.Core.ViewModels
 				}
 				return this.signUpCommand;
 			}
-		}		
+		}
 
-		public ErrorModel SignUp ()
+		public bool SignUp ()
 		{
-			var isError = false;
+			var isSuccess = false;
 			var errorMessage = String.Empty;
 			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
 				String.IsNullOrEmpty (this.Password)) {
-				isError = true;
-				errorMessage = "You must supply an Email Address and Password to sign up.";
+				Mvx.Resolve<IUserInteraction>().Alert("You must supply an Email Address and Password to sign up.");
+				return isSuccess;
 			} else {
+				isSuccess = true;
 				this.userService.SaveUser(this.EmailAddress,this.Password);
 			}
-			return new ErrorModel (isError, errorMessage);
+			return isSuccess;
+		}
+
+		public bool Login(){
+			var isSuccess = false;
+			var errorMessage = String.Empty;
+			if (String.IsNullOrEmpty (this.EmailAddress) || String.IsNullOrWhiteSpace (this.EmailAddress) ||
+				String.IsNullOrEmpty (this.Password)) {
+				Mvx.Resolve<IUserInteraction>().Alert("You must supply an Email Address and Password to Login.");
+				return isSuccess;
+			} else {
+				isSuccess = true;
+				this.userService.GetUser(this.EmailAddress,this.Password);
+			}
+			return isSuccess;
 		}
 
 		public void IsVisible (bool isVisible)

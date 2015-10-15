@@ -5,6 +5,8 @@ using Racing.Core.Services;
 using Xamarin.Forms;
 using Glossaries.Model;
 using Glossaries.Core.Interfaces;
+using Cirrious.CrossCore;
+using Chance.MvvmCross.Plugins.UserInteraction;
 
 namespace Glossaries.Core.ViewModels
 {
@@ -91,9 +93,11 @@ namespace Glossaries.Core.ViewModels
 
 		public bool SaveGlossary ()
 		{
-			if(this.Description != null && this.Description.Length <= 500){
-				this.glossaryService.SaveUserGlossary(this.Id, this.Name,this.Description,this.userId);
+			if (this.Description != null && this.Description.Length <= 500) {
+				this.glossaryService.SaveUserGlossary (this.Id, this.Name, this.Description, this.userId);
 				return true;
+			} else {
+				Mvx.Resolve<IUserInteraction>().Alert("Description must not exceed 500 characters");
 			}
 			return false;
 		}
