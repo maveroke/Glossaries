@@ -20,6 +20,7 @@ namespace Glossaries.IOS
 				var set = this.CreateBindingSet<GlossaryCell,GlossaryViewModel>();
 				set.Bind(NameLabel).To(glossary => glossary.Name);
 				set.Bind(DeleteButton).To(glossary=>glossary.DeleteGlossaryCommand);
+				set.Bind(EditButton).To(glossary=>glossary.EditGlossaryCommand);
 				set.Apply();
 			});
 		}

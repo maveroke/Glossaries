@@ -11,38 +11,23 @@ namespace Racing.Core.Services
 	{
 		private const string GlossaryTable = "Glossary";
 
-//		public async Task<UserModel> GetUser (UserModel userModel)
-//		{
-//			var query = ParseObject.GetQuery (UserTable)
-//				.WhereEqualTo ("EmailAddress", userModel.EmailAddress)
-//				.WhereEqualTo ("Password", userModel.Password);
-//			IEnumerable<ParseObject> results = await query.FindAsync();
-//			if(results.FirstOrDefault() != null){
-//				return new UserModel (results.FirstOrDefault());
-//			}
-//			return null;
-//		}
-//
-//		public async void SaveUser (UserModel userModel)
-//		{
-//			var user = new ParseObject (UserTable);
-//			user["EmailAddress"] = userModel.EmailAddress;
-//			user["Password"] = userModel.Password;
-//			await user.SaveAsync ();
-//		}
-
 		public void GetUserGlossaries (string userId)
 		{
 			GetGlossaries (userId);
 		}
 
-		public void SaveUserGlossary (string name, string description,string userId)
+		public void GetUserGlossary (string id)
 		{
-			var glossary = new ParseObject (GlossaryTable);
-			glossary["Name"] = name;
-			glossary["Description"] = description;
-			glossary ["UserId"] = userId;
-			SaveGlossary (glossary);
+			GetGlossary (id);
+		}
+
+		public void SaveUserGlossary (string id, string name, string description,string userId)
+		{
+//			var glossary = new ParseObject (GlossaryTable);
+//			glossary["Name"] = name;
+//			glossary["Description"] = description;
+//			glossary ["UserId"] = userId;
+			SaveGlossary (id,name,description,userId);
 		}
 
 		public void DeleteUserGlossary (string Id){
@@ -57,6 +42,17 @@ namespace Racing.Core.Services
 //			DeleteGlossary (glossary);
 //		}
 
+		private async void GetGlossary(string id){
+			var query = ParseObject.GetQuery (GlossaryTable)
+				.WhereEqualTo ("objectId", id);
+			IEnumerable<ParseObject> results = await query.FindAsync();
+			if(results.Any()){
+				MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (new GlossaryModel (results.FirstOrDefault())), "EditGlossary");
+			} else {
+				MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (), "EditGlossary");
+			}
+		}
+
 		private async void GetGlossaries(string userId){
 			var query = ParseObject.GetQuery (GlossaryTable)
 				.WhereEqualTo ("UserId", userId);
@@ -68,12 +64,31 @@ namespace Racing.Core.Services
 				}
 				MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (list), "Glossaries");
 			} else {
-				MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (null), "Glossaries");
+				MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (), "Glossaries");
 			}
 		}
 
-		private async void SaveGlossary(ParseObject glossary){
-			await glossary.SaveAsync ();
+		private async void SaveGlossary(string id, string name, string description,string userId){
+			ParseObject glossaryParseObject = null;
+			if (!string.IsNullOrEmpty (id)) {
+				var query = ParseObject.GetQuery (GlossaryTable)
+				.WhereEqualTo ("objectId", id);
+				IEnumerable<ParseObject> results = await query.FindAsync ();
+				if (results.Any ()) {
+					if (results.FirstOrDefault () != null) {
+						glossaryParseObject = results.FirstOrDefault ();
+					}
+				}
+			}
+			if (glossaryParseObject == null) {
+				glossaryParseObject = new ParseObject (GlossaryTable);
+			}
+
+			glossaryParseObject ["Name"] = name;
+			glossaryParseObject ["Description"] = description;
+			glossaryParseObject ["UserId"] = userId;
+
+			await glossaryParseObject.SaveAsync ();
 			MessagingCenter.Send<GlossaryMessenger> (new GlossaryMessenger (), "SaveGlossary");
 		}
 

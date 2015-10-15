@@ -27,6 +27,9 @@
                             <color key="titleColor" red="1" green="0.070236308712234075" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UYr-Fl-Ynz">
+                        <rect key="frame" x="0.0" y="0.0" width="274" height="44.5"/>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="oWd-bl-G8a" firstAttribute="trailing" secondItem="gCc-zc-qV3" secondAttribute="trailingMargin" id="RLr-Xa-LBO"/>
@@ -37,6 +40,7 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="DeleteButton" destination="oWd-bl-G8a" id="huL-A3-lNn"/>
+                <outlet property="EditButton" destination="UYr-Fl-Ynz" id="cSP-Ag-hLL"/>
                 <outlet property="NameLabel" destination="NSj-6e-K34" id="F2p-OH-RDn"/>
             </connections>
         </tableViewCell>

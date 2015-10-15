@@ -5,14 +5,18 @@ namespace Glossaries.Model
 {
 	public class GlossaryMessenger
 	{
-		public List<GlossaryModel> GlossaryModel;
+		public List<GlossaryModel> GlossariesModel;
+		public GlossaryModel EditGlossaryModel;
 
 		public GlossaryMessenger(){
 
 		}
 
-		public GlossaryMessenger(List<GlossaryModel> glossaryModel){
-			this.GlossaryModel = glossaryModel;
+		public GlossaryMessenger(List<GlossaryModel> glossariesModel){
+			this.GlossariesModel = glossariesModel;
+		}
+		public GlossaryMessenger(GlossaryModel glossaryModel){
+			this.EditGlossaryModel = glossaryModel;
 		}
 	}
 }

@@ -37,9 +37,12 @@ namespace Glossaries.IOS.Views
 
 			var set = this.CreateBindingSet<MainView, Core.ViewModels.MainViewModel> ();
 			set.Bind (source).To (vm => vm.Glossaries);
-			set.Bind (source).For(s => s.SelectionChangedCommand).To (vm => vm.EditGlossaryCommand);
 			set.Bind (btnAdd).To (vm => vm.AddGlossaryCommand);
 			set.Apply ();
+
+//			var set2 = this.CreateBindingSet<MainView,Core.ViewModels.GlossaryViewModel> ();
+//			set2.Bind (source).For(s => s.SelectionChangedCommand).To (vm => vm.EditGlossaryCommand);
+//			set2.Apply ();
 
 			TableView.ReloadData ();
 		}

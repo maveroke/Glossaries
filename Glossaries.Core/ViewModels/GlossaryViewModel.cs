@@ -16,6 +16,11 @@ namespace Glossaries.Core.ViewModels
 			MessagingCenter.Subscribe<GlossaryMessenger>(this,"SaveGlossary",(sender) => {
 				ShowViewModel<MainViewModel>(new { userId = this.userId});
 			});
+			MessagingCenter.Subscribe<GlossaryMessenger>(this,"EditGlossary",(sender) => {
+				if(sender.EditGlossaryModel != null){
+					UpdateViewModel(sender.EditGlossaryModel);
+				}
+			});
 		}
 
 		public GlossaryViewModel (GlossaryModel glossary)
@@ -52,6 +57,19 @@ namespace Glossaries.Core.ViewModels
 			}
 		}
 
+		private ICommand editGlossaryCommand;
+
+		public ICommand EditGlossaryCommand {
+			get {
+				if (this.editGlossaryCommand == null) {
+					this.editGlossaryCommand = new MvxCommand (() => {
+						ShowViewModel<GlossaryViewModel>(new { Id = this.Id});
+					});
+				}
+				return this.editGlossaryCommand;
+			}
+		}
+
 		private string userId;
 
 		private string Id;
@@ -73,14 +91,17 @@ namespace Glossaries.Core.ViewModels
 		public bool SaveGlossary ()
 		{
 			if(this.Description != null && this.Description.Length <= 500){
-				this.glossaryService.SaveUserGlossary(this.Name,this.Description,this.userId);
+				this.glossaryService.SaveUserGlossary(this.Id, this.Name,this.Description,this.userId);
 				return true;
 			}
 			return false;
 		}
 
-		public void Init (string userId)
+		public void Init (string Id, string userId)
 		{
+			if (!string.IsNullOrEmpty (Id)) {
+				this.glossaryService.GetUserGlossary (Id);
+			}
 			if (!string.IsNullOrEmpty (userId)) {
 				this.userId = userId;
 			}

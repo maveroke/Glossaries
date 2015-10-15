@@ -20,9 +20,9 @@ namespace Glossaries.Core.ViewModels
 		public MainViewModel(IGlossaryService glossaryService){
 			this.glossaryService = glossaryService;
 			MessagingCenter.Subscribe<GlossaryMessenger>(this,"Glossaries",(sender) => {
-				if(sender.GlossaryModel != null){
+				if(sender.GlossariesModel != null){
 					this.Glossaries.Clear();
-					foreach(var glossary in sender.GlossaryModel){
+					foreach(var glossary in sender.GlossariesModel){
 						var glossaryViewModel = new GlossaryViewModel(glossary);
 						this.Glossaries.Add(glossaryViewModel);
 					}
@@ -37,19 +37,6 @@ namespace Glossaries.Core.ViewModels
 					glossaries = new ObservableCollection<GlossaryViewModel> ();
 				}
 				return glossaries;
-			}
-		}
-
-		private ICommand editGlossaryCommand;
-
-		public ICommand EditGlossaryCommand {
-			get {
-				if (this.editGlossaryCommand == null) {
-					this.editGlossaryCommand = new MvxCommand (() => {
-
-					});
-				}
-				return this.editGlossaryCommand;
 			}
 		}
 
