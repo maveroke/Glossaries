@@ -9,7 +9,7 @@ using Cirrious.MvvmCross.Binding.BindingContext;
 namespace Glossaries.IOS
 {
 	[Register("LoginView")]
-	public class LoginView : MvxViewController
+	public class LoginView : BaseViewController
 		{
 			public override void ViewDidLoad()
 		{
@@ -51,6 +51,8 @@ namespace Glossaries.IOS
 			btnSignUp.SetTitle ("Sign Up", UIControlState.Normal);
 			btnSignUp.SetTitleColor (UIColor.Blue, UIControlState.Normal);
 			loginBox.Add (btnSignUp);
+
+			this.NavigationItem.SetHidesBackButton (true, true);
 
 			var set = this.CreateBindingSet<LoginView, Core.ViewModels.LoginViewModel> ();
 			set.Bind (txtEmail).To (vm => vm.EmailAddress);

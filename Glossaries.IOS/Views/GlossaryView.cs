@@ -9,7 +9,7 @@ using Cirrious.MvvmCross.Binding.BindingContext;
 namespace Glossaries.IOS
 {
 	[Register("GlossaryView")]
-	public class GlossaryView : MvxViewController
+	public class GlossaryView : BaseViewController
 		{
 			public override void ViewDidLoad()
 		{

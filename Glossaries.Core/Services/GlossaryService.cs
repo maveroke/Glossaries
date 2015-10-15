@@ -4,6 +4,7 @@ using Glossaries.Model;
 using System.Linq;
 using System.Collections.Generic;
 using Xamarin.Forms;
+using Glossaries.Core.Interfaces;
 
 namespace Racing.Core.Services
 {

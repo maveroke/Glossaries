@@ -7,11 +7,11 @@ using Xamarin.Forms;
 using Glossaries.Model;
 using Cirrious.CrossCore;
 using System.Collections.Generic;
+using Glossaries.Core.Interfaces;
 
 namespace Glossaries.Core.ViewModels
 {
-	public class MainViewModel 
-		: MvxViewModel
+	public class MainViewModel : MvxViewModel,IVisible
 	{
 		private string userId;
 
@@ -52,11 +52,32 @@ namespace Glossaries.Core.ViewModels
 				return this.addGlossaryCommand;
 			}
 		}
+
+		private ICommand logoutCommand;
+		public ICommand LogoutCommand {
+			get {
+				if (this.logoutCommand == null) {
+					this.logoutCommand = new MvxCommand (() => {
+						ShowViewModel<LoginViewModel>();
+						MessagingCenter.Unsubscribe<GlossaryMessenger>(this,"Glossaries");
+					});
+				}
+				return this.logoutCommand;
+			}
+		}
+
 		public void Init (string userId)
 		{
 			if (!string.IsNullOrEmpty (userId)) {
 				this.userId = userId;
 				this.glossaryService.GetUserGlossaries (userId);
+			}
+		}
+
+		public void IsVisible (bool isVisible)
+		{
+			if (!isVisible) {
+				MessagingCenter.Unsubscribe<GlossaryMessenger> (this, "Glossaries");
 			}
 		}
     }

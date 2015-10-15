@@ -2,7 +2,7 @@
 using Parse;
 using Glossaries.Model;
 
-namespace Racing.Core.Services
+namespace Glossaries.Core.Interfaces
 {
 	public interface IUserService
 	{

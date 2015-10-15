@@ -6,20 +6,20 @@ using Racing.Core.Services;
 using Xamarin.Forms;
 using Glossaries.Model;
 using System;
+using Glossaries.Core.Interfaces;
 
 namespace Glossaries.Core.ViewModels
 {
-	public class LoginViewModel 
-		: MvxViewModel
+	public class LoginViewModel : MvxViewModel,IVisible
 	{
 		private IUserService userService;
 
 		public LoginViewModel(IUserService userService){
 			this.userService = userService;
-			MessagingCenter.Subscribe<UserMessenger>(this,"Login",(sender) => {
-				if(sender.UserModel != null){
-					ShowViewModel<MainViewModel>(new { userId = sender.UserModel.Id});
-				}else{
+			MessagingCenter.Subscribe<UserMessenger> (this, "Login", (sender) => {
+				if (sender.UserModel != null) {
+					ShowViewModel<MainViewModel> (new { userId = sender.UserModel.Id});
+				} else {
 					//Unsuccessful
 				}
 			});
@@ -78,6 +78,13 @@ namespace Glossaries.Core.ViewModels
 				this.userService.SaveUser(this.EmailAddress,this.Password);
 			}
 			return new ErrorModel (isError, errorMessage);
+		}
+
+		public void IsVisible (bool isVisible)
+		{
+			if (!isVisible) {
+				MessagingCenter.Unsubscribe<UserMessenger> (this, "Login");
+			}
 		}
     }
 }

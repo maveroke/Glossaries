@@ -117,6 +117,8 @@
     <Compile Include="Views\GlossaryCell.designer.cs">
       <DependentUpon>GlossaryCell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\BaseViewController.cs" />
+    <Compile Include="Views\BaseTableViewController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>

@@ -10,7 +10,7 @@ using Cirrious.MvvmCross.Binding.Touch.Views;
 namespace Glossaries.IOS.Views
 {
     [Register("MainView")]
-	public class MainView : MvxTableViewController
+	public class MainView : BaseTableViewController
     {
 		public override void ViewDidLoad ()
 		{
@@ -35,9 +35,16 @@ namespace Glossaries.IOS.Views
 
 			this.NavigationController.ToolbarHidden = false;
 
+			var btnLogout = new UIBarButtonItem ();
+			btnLogout.Title = "Logout";
+			this.NavigationItem.SetRightBarButtonItem(btnLogout, true);
+
+			this.NavigationItem.SetHidesBackButton (true, true);
+
 			var set = this.CreateBindingSet<MainView, Core.ViewModels.MainViewModel> ();
 			set.Bind (source).To (vm => vm.Glossaries);
 			set.Bind (btnAdd).To (vm => vm.AddGlossaryCommand);
+			set.Bind (btnLogout).To (vm => vm.LogoutCommand);
 			set.Apply ();
 
 //			var set2 = this.CreateBindingSet<MainView,Core.ViewModels.GlossaryViewModel> ();

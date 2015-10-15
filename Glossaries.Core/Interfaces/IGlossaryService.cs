@@ -3,7 +3,7 @@ using Parse;
 using Glossaries.Model;
 using System.Collections.Generic;
 
-namespace Racing.Core.Services
+namespace Glossaries.Core.Interfaces
 {
 	public interface IGlossaryService
 	{

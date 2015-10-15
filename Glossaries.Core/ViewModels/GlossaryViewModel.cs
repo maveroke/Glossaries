@@ -4,10 +4,11 @@ using Cirrious.MvvmCross.ViewModels;
 using Racing.Core.Services;
 using Xamarin.Forms;
 using Glossaries.Model;
+using Glossaries.Core.Interfaces;
 
 namespace Glossaries.Core.ViewModels
 {
-	public class GlossaryViewModel : MvxViewModel
+	public class GlossaryViewModel : MvxViewModel,IVisible
 	{
 		private IGlossaryService glossaryService;
 
@@ -113,6 +114,14 @@ namespace Glossaries.Core.ViewModels
 			this.userId = glossary.UserId;
 			this.Name = glossary.Name;
 			this.Description = glossary.Description;
+		}
+
+		public void IsVisible (bool isVisible)
+		{
+			if (!isVisible) {
+				MessagingCenter.Unsubscribe<GlossaryMessenger> (this, "SaveGlossary");
+				MessagingCenter.Unsubscribe<GlossaryMessenger> (this, "EditGlossary");
+			}
 		}
 	}
 }
