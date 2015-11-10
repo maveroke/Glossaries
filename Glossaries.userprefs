@@ -1,0 +1,48 @@
+﻿<Properties StartupItem="Glossaries.IOS/Glossaries.IOS.csproj" RefactoringSettings.EnableRefactorings="True">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone6s.9.0" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Glossaries.Test/LoginTest.cs">
+    <Files>
+      <File FileName="Glossaries.Core/ViewModels/LoginViewModel.cs" Line="97" Column="1" />
+      <File FileName="Glossaries.Test/LoginTest.cs" Line="87" Column="29" />
+      <File FileName="Glossaries.Core/Interfaces/IUserService.cs" Line="11" Column="4" />
+      <File FileName="Glossaries.Core/Services/UserService.cs" Line="20" Column="40" />
+      <File FileName="Glossaries.Test/GlossaryTest.cs" Line="50" Column="36" />
+      <File FileName="Glossaries.Core/ViewModels/MainViewModel.cs" Line="23" Column="1" />
+      <File FileName="Glossaries.Core/ViewModels/GlossaryViewModel.cs" Line="45" Column="13" />
+    </Files>
+    <Pads>
+      <Pad Id="MonoDevelop.NUnit.TestPad">
+        <State name="__root__">
+          <Node name="Glossaries" expanded="True">
+            <Node name="common" expanded="True">
+              <Node name="Glossaries.Test" expanded="True">
+                <Node name="Glossaries" expanded="True">
+                  <Node name="Test" expanded="True">
+                    <Node name="GlossaryTest" expanded="True" selected="True" />
+                    <Node name="LoginTest" expanded="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/marleezirkler/Glossaries/Glossaries.Core/ViewModels/FirstViewModel.cs" line="24" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches>
+    <Watch file="../../../Volumes/Untitled/mobile-devices/Racing.Core/ViewModels/RaceView/EntryViewModel.cs" line="913" offsetX="916" offsetY="13547" expression="this.FinishPosition" liveUpdate="False" />
+    <Watch file="../../../Volumes/Untitled/mobile-devices/Racing.Android/Views/MainView.cs" line="205" offsetX="342" offsetY="1860" expression="e.PropertyName" liveUpdate="False" />
+    <Watch file="../../../Volumes/Untitled/mobile-devices/Racing.Core/ViewModels/MainView/MainViewModel.cs" line="202" offsetX="674" offsetY="2265" expression="this.articles" liveUpdate="False" />
+    <Watch file="../../../Volumes/Untitled/mobile-devices/Racing.Android/Views/MeetView.cs" line="58" offsetX="342" offsetY="825" expression="e.PropertyName" liveUpdate="False" />
+    <Watch file="../../../Volumes/Untitled/mobile-devices/Racing.Android/Controls/MvxHeaderListView.cs" line="149" offsetX="429" offsetY="2205" expression="FirstVisiblePosition" liveUpdate="False" />
+  </MonoDevelop.Ide.DebuggingService.PinnedWatches>
+  <DisabledProjects>
+    <String>../../../Volumes/Untitled/mobile-devices/Racing.Core/Racing.Core.csproj</String>
+    <String>../../../Volumes/Untitled/mobile-devices/Racing.Models/Racing.Models.csproj</String>
+  </DisabledProjects>
+</Properties>
